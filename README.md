@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# 云文档
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 环境配置
 
-## Available Scripts
+```shell
+# 安装 react 项目
+$ npx create-react-app cloud-doc
+# 进入项目
+$ cd cloud-doc
+# 安装 electron
+$ npm install electron --save-dev
+# 安装 electron-is-dev
+$ npm install electron-is-dev --save-dev
+# 安装 concurrently: https://www.npmjs.com/package/concurrently
+$ npm install concurrently --save-dev
+# 安装 wait-on: https://www.npmjs.com/package/wait-on
+$ npm install wait-on --save-dev
+# 安装 cross-env https://www.npmjs.com/package/cross-env
+$ npm install --save-dev cross-env
+# 安装样式库 https://getbootstrap.com/
+$ npm install bootstrap --save
+# 安装图标库 https://fontawesome.com/v6/docs/web/use-with/react/
+$ npm i --save @fortawesome/fontawesome-svg-core
+$ npm i --save @fortawesome/free-solid-svg-icons
+$ npm i --save @fortawesome/free-brands-svg-icons
+$ npm i --save @fortawesome/react-fontawesome@latest
+# 安装classnames https://github.com/JedWatson/classnames
+$ npm install classnames --save
+# 安装 node-sass
+$ npm install node-sass --save
+# 安装 makedown-editer https://github.com/RIP21/react-simplemde-editor
+$ npm install --save react-simplemde-editor easymde
 
-In the project directory, you can run:
+## 创建 main.js 【electron 程序入口】
+## 修改 package.json
 
-### `npm start`
+# 启动项目
+$ npm run dev
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### main.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```js
+const { app, BrowserWindow } = require('electron')
+const isDev = require("electron-is-dev")
 
-### `npm test`
+let mainWindow
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+app.on('ready', () => {
+    mainWindow = new BrowserWindow({
+        width: 1024,
+        height: 680,
+        webPreferences: {
+            nodeIntegration: true,
+        }
+    })
+    const urlLocation = isDev ? "http://localhost:3000": "dummyurl"
+    mainWindow.loadURL(urlLocation)
+})
+```
 
-### `npm run build`
+### package.json
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```json
+{
+  "name": "cloud-doc",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.js",  // 重点
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\""  // 重点
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "cross-env": "^7.0.3",
+    "electron": "^21.1.1",
+    "electron-is-dev": "^2.0.0",
+    "wait-on": "^6.0.1"
+  }
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## State 设计原则
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 最小化 State 原则
+- DRY - Don‘t Repeat Yourself
+- 有些数据可以根据已有 State 计算得出
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

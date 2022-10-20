@@ -30,6 +30,8 @@ $ npm install classnames --save
 $ npm install node-sass --save
 # 安装 makedown-editer https://github.com/RIP21/react-simplemde-editor
 $ npm install --save react-simplemde-editor easymde
+# 安装 uuid
+$ npm install --save uuid
 
 ## 创建 main.js 【electron 程序入口】
 ## 修改 package.json

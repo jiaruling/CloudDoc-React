@@ -14,6 +14,7 @@ const FileSearch = ({ title, onFileSearch }) => {
     const closeSearch = () => {
         setInputActive(false)
         setValue('')
+        onFileSearch('')
     }
 
     useEffect(() => {
@@ -38,7 +39,7 @@ const FileSearch = ({ title, onFileSearch }) => {
                     <span>{title}</span>
                     <button
                         type="button"
-                        className="icon-button"
+                        className="icon-button ms-3"
                         onClick={() => { setInputActive(true) }}
                     >
                         <FontAwesomeIcon
@@ -59,7 +60,7 @@ const FileSearch = ({ title, onFileSearch }) => {
                     />
                     <button
                         type="button"
-                        className="icon-button"
+                        className="icon-button ms-3"
                         onClick={closeSearch}
                     >
                         <FontAwesomeIcon

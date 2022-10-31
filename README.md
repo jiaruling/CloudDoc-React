@@ -38,6 +38,11 @@ $ npm install --save uuid
 
 # 启动项目
 $ npm run dev
+
+# npm一键安装package.json里的依赖文件
+$ npm install  # 默认安装package.json中的所有模块
+$ npm install --dependencies  # 只安装dependencies中的内容
+$ npm install --devDependencies  # 只安装devDependencies中的内容
 ```
 
 ### main.js

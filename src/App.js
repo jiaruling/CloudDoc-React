@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import { faPlus, faFileImport } from '@fortawesome/free-solid-svg-icons';
-import SimpleMDE from "react-simplemde-editor";
 import uuid4 from 'uuid'
+import * as marked from 'marked'
+import SimpleMDE from "react-simplemde-editor";
+import { faPlus, faFileImport } from '@fortawesome/free-solid-svg-icons';
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "easymde/dist/easymde.min.css";
+import './App.css';
+
 import FileSearch from './components/FileSearch';
 import FileList from './components/FileList';
 import defaultFiles from './utils/defaultFiles';
 import BottomBtn from './components/BottomBtn';
 import TabList from './components/TabList';
-import * as marked from 'marked'
 
 function App() {
   const [files, setFiles] = useState(defaultFiles)
@@ -19,7 +21,7 @@ function App() {
   const [unsavedFileIDs, setUnsavedFileIDs] = useState([])
   const [searchedFiled, setSearchedFiled] = useState([])
   const openedFiles = openedFileIDs.map(openID => {
-    return files.find(file => file.id == openID)
+    return files.find(file => file.id === openID)
   })
   const activeFile = files.find(file => file.id === activeFileID)
   const fileClick = (fileID) => {
